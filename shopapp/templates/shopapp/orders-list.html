@@ -1,0 +1,28 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+	Orders List
+{% endblock %}
+
+{% block body %}
+	<h1>Oders:</h1>
+
+    <div>
+        <a href="{% url 'shopapp:create_order' %}">Create New Order</a>
+    </div>
+
+    {% if orders %}
+        <div>
+            {% for order in orders %}
+                <div>
+                <p>Order by {% firstof order.user.first_name order.user.username %}</p>
+                <p>Promocode <code>{{ order.promocode }}</code></p>
+                <p>Delivery addres: {{ order.delivery_adress }}</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Shop Index
+{% endblock %}
+
+{% block body %}
+    <h1>Hello Shop Index!</h1>
+
+    <div>
+    <strong>
+        Products count: {{ products|length }}
+    </strong>
+    </div>
+
+    <div>
+        <h2>Available pages:</h2>
+        <ul>
+            {% for page in available_pages %}
+            	<li>
+                    <a href="{{ page.url }}">{{ page.title }}</a>
+                    {% if page.description %}
+                        <br><smal>{{ page.description }}</smal>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No pages available</li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div>
+        <ul>
+            {% for name, price in products %}
+            <li>{{ name }} ({{ name|length }}): ${{ price }}</li>
+                {% if name|length == 7 %}
+                    <span><i>Lucky product</i></span>
+                	
+                {% endif %} 
+            {% empty %}
+                Not products here
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        Time running: {{ time_running }}
+    </div>
+
+    <div>
+        {% lorem 3 p random %}
+    </div>
+
+{% endblock %}

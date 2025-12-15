@@ -1,0 +1,38 @@
+{% extends 'shopapp/base.html' %}
+{% block title %}
+	Create order
+{% endblock %}
+
+{% block body %}
+	<form method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="{{ form.user.id_for_label }}">User:</label>
+            {{ form.user }}
+            {{ form.user.errors }}
+        </div>
+
+        <div>
+            <label for="{{ form.delivery_address.id_for_label }}">Delivery Address:</label>
+            {{ form.delivery_address }}
+            {{ form.delivery_address.errors }}
+        </div>
+
+        <div>
+            <label for="{{ form.promocode.id_for_label }}">Promocode:</label>
+            {{ form.promocode }}
+            {{ form.promocode.errors }}
+        </div>
+
+        <div>
+            <label>Products:</label>
+            {{ form.products }}
+            {{ form.products.errors }}
+        </div>
+
+        <button type="submit">Create Order</button>
+    </form>
+
+    <a href="{% url 'shopapp:orders_list' %}">Back to Orders List</a>
+{% endblock %}
