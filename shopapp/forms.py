@@ -1,41 +1,63 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core import validators
 
 from shopapp.models import Product, Order
-
-
-# class ProductForm(forms.Form):
-#     name = forms.CharField(max_length=50)
-#     price = forms.DecimalField(min_value=1, max_value=1000000, decimal_places=2)
-#     description = forms.CharField(
-#         label='Product description',
-#         widget=forms.Textarea(attrs={'rows': 5, 'cols': 30}),
-#         validators=[validators.RegexValidator(
-#             regex=r'greate',
-#             message='Field must contain word "greate"',
-#         )],
-#     )
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'price', 'description', 'discount']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'product name',
+            }),
+            'price': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.01',
+                'min': '0',
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '4',
+                'placeholder': 'product description',
+            }),
+            'discount': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': '0',
+                'max': '100',
+            }),
+        }
+
 
 class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['user', 'delivery_address', 'products', 'promocode']
+        widgets = {
+            'delivery_address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'cols': 40,
+            }),
+        }
+
     products = forms.ModelMultipleChoiceField(
         queryset=Product.objects.filter(archived=False),
         widget=forms.CheckboxSelectMultiple,
-        required=True,
+        required=True
     )
     user = forms.ModelChoiceField(
         queryset=User.objects.all(),
         required=True,
+        widget=forms.Select(attrs={
+          'class': 'form-select',
+        })
     )
 
+
+class GroupForm(forms.ModelForm):
     class Meta:
-        model = Order
-        fields = ['delivery_address', 'promocode', 'user', 'products']
-        widgets = {
-            'delivery_address': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
-        }
+        model = Group
+        fields = ['name']

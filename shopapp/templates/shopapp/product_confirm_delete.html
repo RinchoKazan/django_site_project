@@ -1,0 +1,55 @@
+{% extends 'shopapp/base.html' %}
+{% block title %}
+	Archive {{ object.name }}
+{% endblock %}
+{% block body %}
+	<div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Archive product</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5 class="alert-heading">Warning</h5>
+                        <p class="mb-0">Are you sure you want to archive this order?</p>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'shopapp:product_details' pk=object.pk %}"
+                            class="btn btn-outline-secondary">
+                                Bact to product
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                Archived product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{#{% extends 'shopapp/base.html' %}#}
+{#{% block title %}#}
+{#	Confirm Archived {{ object.name }}#}
+{#{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#	<h1>Are you sure want to Archived {{ object.name }}?</h1>#}
+{#    <br>#}
+{#    <div>#}
+{#        <a href="{% url 'shopapp:product_details' pk=object.pk %}">Back to product</a>#}
+{#    </div>#}
+{#    <br>#}
+{##}
+{#    <div>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit">Archived</button>#}
+{#    </form>#}
+{#    </div>#}
+{#{% endblock %}#}

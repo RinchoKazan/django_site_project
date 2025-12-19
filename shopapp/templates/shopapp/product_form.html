@@ -1,0 +1,125 @@
+{% extends 'shopapp/base.html' %}
+{% block title %}
+    {% if object %}
+    	Edit Product #{{ object.pk }}
+    {% else %}
+        Create a new Product
+    {% endif %}
+{% endblock %}
+{% block body %}
+	<div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header {% if object %}bg-warning{% else %}bg-success{% endif %} text-white">
+                    <h3 class="mb-0">
+                        {% if object %}
+                            Edit Product #{{ object.name }}
+                        {% else %}
+                            Create a new Product
+                        {% endif %}
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    {% if object %}
+                    	<div class="alert alert-info mb-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Current name:</strong> {{ object.name }}</p>
+                                    <p class="mb-0"><strong>Price:</strong> ${{ object.price }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Discount:</strong>
+                                        {% if object.discount %}
+                                            {{ object.discount }}
+                                        {% else %}
+                                            None
+                                        {% endif %}
+                                    </p>
+                                    <p class="mb-0"><strong>Status:</strong>
+                                        {% if object.archived %}
+                                        	<span class="badge bg-danger">Archived</span>
+                                        {% else %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                             <label class="form-label">Product name</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                        	    <div class="text-danger small mt-1">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Price $</label>
+                                {{ form.price }}
+                                <div class="form-text">Enter price</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Discount %</label>
+                                {{ form.discount }}
+                                <div class="form-text">Optional from 0 to 100</div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Description</label>
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            {% if object %}
+                                <a href="{% url 'shopapp:product_details' pk=object.pk %}"
+                                class="btn btn-outline-secondary">
+                                Back to Product
+                                </a>
+                            {% else %}
+                                <a href="{% url 'shopapp:products_list' %}"
+                                class="btn btn-outline-secondary">
+                                Back to Products
+                                </a>
+                            {% endif %}
+
+                            <button type="submit" class="btn {% if object %}btn-warning{% else %}btn-success{% endif %}">
+                                {% if object %}
+                                    Update Product
+                                {% else %}
+                                    Create Product
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{#{% extends 'shopapp/base.html' %}#}
+{#{% block title %}#}
+{#	Create product#}
+{#{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#	<h1>Create product</h1>#}
+{#    <div>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit">Create</button>#}
+{#    </form>#}
+{#    </div>#}
+{#    <div>#}
+{#        <a href="{% url 'shopapp:products_list' %}">back to product list</a>#}
+{#    </div>#}
+{#{% endblock %}#}

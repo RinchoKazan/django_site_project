@@ -1,0 +1,57 @@
+{% extends 'shopapp/base.html' %}
+{% block title %}
+	Delete order #{{ object.pk }}
+{% endblock %}
+{% block body %}
+	<div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Delete Order Confirmation</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5 class="alert-heading">Warning</h5>
+                        <p class="mb-0">Are you sure you want to delete this order?</p>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'shopapp:orders_details' pk=object.pk %}"
+                            class="btn btn-outline-secondary">
+                                Bact to order
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                Delete order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{#{% extends 'shopapp/base.html' %}#}
+{#{% block title %}#}
+{#    Confirm delete#}
+{#{% endblock %}#}
+{##}
+{##}
+{##}
+{#{% block body %}#}
+{#	<h1>Are you shure want to delete order #{{ object.pk }}?</h1>#}
+{#    <br>#}
+{#    <div>#}
+{#        <a href="{% url 'shopapp:orders_details' pk=object.pk %}">Bact to order</a>#}
+{#    </div>#}
+{#    <br>#}
+{#    <div>#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit">Delete</button>#}
+{#    </form>#}
+{#    </div>#}
+{#{% endblock %}#}

@@ -1,32 +1,36 @@
 {% extends 'shopapp/base.html' %}
 
 {% block title %}
-	Group List
+    Group list
 {% endblock %}
 
 {% block body %}
-	<h1>Groups: </h1>
+    <h1>Groups:</h1>
     <div>
-        {% if not groups %}
-        	<h3>No groups yet</h3>
-        {% else %}
-            <ul>
-                {% for group in groups %}
-                    <li>
-                        <div>{{ group.name }}</div>
-                        <ul>
-                            {% for permission in group.permissions.all %}
-                            	<li>
-                                    {{ permission.name }}
-                                    <code>({{ permission.codename }})</code>
-                                </li>
-
-                            {% endfor %}
-                        </ul>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create</button>
+        </form>
+    </div>
+    <div>
+    {% if not groups %}
+    	<h3>No groups yet</h3>
+    {% else %}
+        <ul>
+            {% for group in groups %}
+                <div>{{ group.name }}</div>
+                <ul>
+                {% for permission in group.permissions.all %}
+                    <li>{{ permission.name }}
+                        (<code>{{ permission.codename }}</code>)
                     </li>
                 {% endfor %}
-            </ul>
+                </ul>
 
-        {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     </div>
 {% endblock %}
